@@ -1,0 +1,79 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@charset "utf-8";
+
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
+@import "minimal-mistakes"; // main partials
+
+.home-column {
+  float: left;
+  width: 33.33%;
+}
+
+.home-row:after {
+  display: table;
+  clear: both;
+}
+
+.project-info-block {
+}
+
+.project-info-block .image-block {
+  //width:calc(100% - #{$right-sidebar-width-narrow});
+  width:100%;
+  // background-color: #FF0000;
+  -webkit-transition: opacity 0.5s ease-in-out transform 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out transform 0.5s ease-in-out;
+  opacity:0.7;
+  &:hover{
+    opacity:1;
+    transform: matrix(1.02,0,0,1.02,0,0)
+  }
+  margin:auto;
+}
+
+.separation-border {
+    border-bottom: 1px solid $amber-yellow;
+    width:70%;
+    margin:auto;
+    padding-top: 1em;
+    color: $amber-yellow;
+    text-align: center;
+}
+
+.archived-projects {
+    background-color: #F8F8F8;
+    position:relative;
+    // border-bottom: 1px solid $amber-yellow;
+    height:200px;
+    overflow: hidden;
+    //margin-bottom: 1em;
+    margin-top: 1em;
+    opacity:0.7;
+    -webkit-transition: opacity 0.5s ease-in-out transform 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out transform 0.5s ease-in-out;
+    &:hover {
+      opacity:1;
+      transform: matrix(1.01,0,0,1.01,0,0);
+    }
+}
+
+.archived-projects .thumbnail-image {
+  float:left;
+}
+.archived-projects .project-details {
+  float:left;
+  padding-left:1em;
+}
+.archived-projects .project-title {
+  float:up;
+  font-weight: bold;
+}
+.archived-projects .project-content {
+  float:up;
+}
+.archive .archsec a {
+  color:#000000;
+}

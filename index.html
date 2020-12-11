@@ -1,0 +1,39 @@
+---
+layout: home
+header:
+  overlay_image: /assets/images/greenbeans.jpg
+author_profile: true
+title: "YEYEYEYE"
+---
+
+<div class=project-info-block>
+  <h1>Ayy watsup</h1>
+  {% for item in site.data.navigation.topprojectlist %}
+    <h2>{{ item.title }}</h2>
+    <!-- <div class=image-block> -->
+      <a href="{{ item.url }}">
+      <img src="{{ item.imglink }}" alt="{{ item.title }}" width='1080' class=image-block>
+    <!-- </div> -->
+      </a>
+  <p>{{item.content}}</p>
+  <div class=separation-border></div>
+  {% endfor %}
+</div>
+
+<!-- <div class="home-row">
+  <div class="home-column">
+    <h2>Column 1</h2>
+    <p>Details and stuff</p>
+    <img src="/assets/images/greenbeans.jpg" alt="Column1Img" width="128" height="128">
+  </div>
+  <div class="home-column">
+    <h2>Column 2</h2>
+    <p>Details and stuff</p>
+    <img src="/assets/images/greenbeans.jpg" alt="Column2Img" width="128" height="128">
+  </div>
+  <div class="home-column">
+    <h2>Column 3</h2>
+    <p>Details and stuff</p>
+    <img src="/assets/images/greenbeans.jpg" alt="Column3Img" width="128" height="128">
+  </div>
+</div> -->

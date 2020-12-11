@@ -1,0 +1,39 @@
+schoolwork:
+  - title: "Thesis: Learning Mechanical Systems with DQN and dP"
+    url: /projects/thesis/
+    imglink: ""
+    content: "Interactive MNIST to see NN internals, PCA, t-SNE, etc."
+  - title: "Learning a Quadcopter Flip with Reinforcement Learning"
+    url: /projects/thesis/
+    imglink: ""
+    content: "Interactive MNIST to see NN internals, PCA, t-SNE, etc."
+
+personalprojects:
+  - title: "OT Salary Analysis"
+    url: /projects/otsalaryanalysis/
+    imglink: ""
+    content: "Analysis of dc's stuff"
+  - title: "POE Currency Prediction"
+    url: /projects/poeproj/
+    imglink: /assets/images/Path_of_Exile_Logo.png
+    content: "Lots of random crap"
+  - title: "Toxicity in Gaming Communities"
+    url: /projects/toxicityingaming/
+    imglink: /assets/images/greenbeans.jpg
+    content: "League toxic, FFXIV not"
+  - title: "Learning to Play Geometry Dash with a Genetic Algorithm"
+    url: /projects/geometrydash/
+    imglink: ""
+    content: "Geometry Dash Genetic Algo NN"
+  - title: "Interactive MNIST Application"
+    url: /projects/interactivemnist/
+    imglink: ""
+    content: "Interactive MNIST to see NN internals, PCA, t-SNE, etc."
+  - title: "The Friendly Bunch Warcraft Logs Analysis"
+    url: /projects/tfbwclogs/
+    imglink: ""
+    content: "TFB Mythic raid prog"
+  - title: "Visualizing Gradient Optimizers"
+    url: /projects/visualizegradients/
+    imglink: ""
+    content: "Implement optimizers"
