@@ -1,22 +1,27 @@
 ---
 layout: home
 header:
-  overlay_image: /assets/images/greenbeans.jpg
+  overlay_image: /assets/images/sitebanner.jpg
 author_profile: true
-title: "YEYEYEYE"
+title: "The Gradient of Me"
+excerpt: "Hi, I'm Ben. Welcome to my website on all things learning, machine or otherwise."
 ---
 
 <div class=project-info-block>
-  <h1>Ayy watsup</h1>
+  <h1 style="margin: 0 0 0; font-size:44px">Sample Work</h1>
   {% for item in site.data.navigation.topprojectlist %}
-    <h2>{{ item.title }}</h2>
-    <!-- <div class=image-block> -->
-      <a href="{{ item.url }}">
-      <img src="{{ item.imglink }}" alt="{{ item.title }}" width='1080' class=image-block>
-    <!-- </div> -->
-      </a>
-  <p>{{item.content}}</p>
-  <div class=separation-border></div>
+  {% for item2 in site.data.projectdata.personalprojects %}
+  {% if item.title == item2.title %}
+      <h2 style="margin:1em 0 0.5em;">{{ item.title }}</h2>
+      <!-- <div class=image-block> -->
+        <a href="{{ item2.url }}">
+        <img src="{{ item2.imglink }}" alt="{{ item2.title }}" width='1080' class=image-block>
+      <!-- </div> -->
+        </a>
+    <!-- <p>{{item2.content}}</p> -->
+  <div class=separation-border style="margin-top:1em;"></div>
+  {% endif %}
+  {% endfor %}
   {% endfor %}
 </div>
 

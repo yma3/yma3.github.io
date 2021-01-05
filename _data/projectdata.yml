@@ -1,39 +1,45 @@
 schoolwork:
   - title: "Thesis: Learning Mechanical Systems with DQN and dP"
     url: /projects/thesis/
-    imglink: ""
-    content: "Interactive MNIST to see NN internals, PCA, t-SNE, etc."
+    imglink: "/assets/images/thesis/rotpend.gif"
+    content: "Thesis for the completion of a Cooper Union Masters Degree in Mechanical Engineering. We use reinforcement learning and differentiable programming to build a control law that is capable of stabilizing a rotary pendulum."
   - title: "Learning a Quadcopter Flip with Reinforcement Learning"
-    url: /projects/thesis/
-    imglink: ""
-    content: "Interactive MNIST to see NN internals, PCA, t-SNE, etc."
+    url: /projects/quadflip/
+    imglink: "/assets/images/quadflip/2d-good.gif"
+    content: "Final Project for Computational Graphs and Machine Learning by Prof. Curro at the Cooper Union. We used reinforcement learning to build an energy controller and when combined with a stabilizing PI controller, create a hybrid that can control the flip of a quadcopter."
 
 personalprojects:
-  - title: "OT Salary Analysis"
+  - title: "Occupational Therapy Salary Analysis"
     url: /projects/otsalaryanalysis/
-    imglink: ""
-    content: "Analysis of dc's stuff"
-  - title: "POE Currency Prediction"
+    imglink: "/assets/images/otsalary/otsalary.jpg"
+    content: "Analysis of surveyed salary information from OTs. Showed statistical significance of a gender-wage gap, and created an XGBoost regression model to estimate the salary of OTs based on education, location, experience and more."
+  - title: "Path of Exile Currency Prediction"
     url: /projects/poeproj/
-    imglink: /assets/images/Path_of_Exile_Logo.png
-    content: "Lots of random crap"
+    imglink: /assets/images/poelogo.jpg
+    content: "Analyzed time-series data in the Path of Exile currency market. Created an RNN to predict future prices based on historical league data for deciding optimal investments. Model outperformed naive and moving average models."
   - title: "Toxicity in Gaming Communities"
     url: /projects/toxicityingaming/
-    imglink: /assets/images/greenbeans.jpg
-    content: "League toxic, FFXIV not"
-  - title: "Learning to Play Geometry Dash with a Genetic Algorithm"
-    url: /projects/geometrydash/
-    imglink: ""
-    content: "Geometry Dash Genetic Algo NN"
+    imglink: /assets/images/toxiccomments.jpg
+    content: "Used the Jigsaw Toxic Comments dataset to create a binary classification model to determine if comments were toxic. Applied transfer learning and used the model on Reddit comments gathered from the Pushshift API. Ranked a few subreddits by the number of sampled toxic comments."
   - title: "Interactive MNIST Application"
     url: /projects/interactivemnist/
-    imglink: ""
-    content: "Interactive MNIST to see NN internals, PCA, t-SNE, etc."
+    imglink: "/assets/images/mnist/app_good7.png"
+    content: "Interactive MNIST to see the behavior of user-generated images relative to the dataset. Users can see PCA and t-SNE clusters and see how certain features can cause different classification algorithms to misclassify data."
   - title: "The Friendly Bunch Warcraft Logs Analysis"
     url: /projects/tfbwclogs/
-    imglink: ""
-    content: "TFB Mythic raid prog"
+    imglink: "/assets/images/tfbwclog/TFBInfoBig.png"
+    content: "Analyzed data from the World of Warcraft guild The Friendly Bunch's mythic N'yalotha raids. Used data from the warcraftlogs API to analyze the performance of the guild and assist in decision making. Created an infographic with the data summarizing all of the progress post-completion."
   - title: "Visualizing Gradient Optimizers"
     url: /projects/visualizegradients/
-    imglink: ""
-    content: "Implement optimizers"
+    imglink: "/assets/images/vizgrad/gradientdescent.gif"
+    content: "Jupyter notebook used to better understand how different gradient optimizers behave, and their pros and cons for when it comes to optimization. Plotted these optimizers to allow the user to see how they operate on a 3D surface."
+
+inprogress:
+  - title: "Learning to Play Geometry Dash with a Genetic Algorithm"
+    url: /projects/geometrydash/
+    imglink: "/assets/images/geodash/geodash.PNG"
+    content: "Currently using a CNN to learn how to play geometry dash. Optimization algorithm is either between reinforcement learning or a genetic algorithm, leaning more towards the genetic algorithm. End goal is for the AI to play GeoDash stages."
+  - title: "Learning a Text Embedding for Twitch Emotes"
+    url: /projects/twitchembedding/
+    imglink: "/assets/images/twitchembed/twitchlogo.jpeg"
+    content: "Twitch emotes are similar to emoticons and emojis. Currently trying to learn a meaningful word embedding given the emotes are in some context in the text. Working on cleaning acquired dataset and exploring possible methods."

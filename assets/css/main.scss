@@ -21,8 +21,8 @@
 }
 
 .project-info-block .image-block {
-  //width:calc(100% - #{$right-sidebar-width-narrow});
-  width:100%;
+  width:calc(100% - 100px);
+  // width:100%;
   // background-color: #FF0000;
   -webkit-transition: opacity 0.5s ease-in-out transform 0.5s ease-in-out;
   transition: opacity 0.5s ease-in-out transform 0.5s ease-in-out;
@@ -66,14 +66,53 @@
 .archived-projects .project-details {
   float:left;
   padding-left:1em;
+  width:75%;
 }
 .archived-projects .project-title {
   float:up;
   font-weight: bold;
+  padding-bottom:0.5em;
 }
 .archived-projects .project-content {
   float:up;
 }
 .archive .archsec a {
   color:#000000;
+}
+
+.author__avatar img{
+  max-width:100%;
+  border-radius: 20%;
+}
+
+.sidebar {
+  opacity:1;
+}
+
+.page__hero--overlay .page__title {
+  text-shadow: 2px 2px 5px #000000;
+  // -webkit-text-stroke: 2px black;
+}
+
+.page__hero--overlay .page__lead {
+  text-shadow: 2px 2px 5px #000000;
+  // -webkit-text-stroke: 2px black;
+}
+
+.archive_home {
+  margin-top: 1em;
+  margin-bottom: 2em;
+
+  @include breakpoint($large) {
+    float: right;
+    width: calc(100% - #{$right-sidebar-width-narrow});
+    // width: 100%
+    padding-right: $right-sidebar-width-narrow;
+  }
+
+  @include breakpoint($x-large) {
+    width: calc(100% - #{$right-sidebar-width-narrow});
+    // width:100%
+    padding-right: $right-sidebar-width-narrow;
+  }
 }

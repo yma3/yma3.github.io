@@ -16,15 +16,7 @@ main:
   #   url: /sitemap/
 
 topprojectlist:
-  - title: "OT Salary Analysis"
-    url: /projects/otsalaryanalysis/
-    imglink: ""
-    content: "Analysis of dc's stuff"
-  - title: "POE Currency Prediction"
-    url: /projects/poeproj/
-    imglink: /assets/images/Path_of_Exile_Logo.png
-    content: "Lots of random crap"
+  - title: "Visualizing Gradient Optimizers"
+  - title: "Occupational Therapy Salary Analysis"
+  - title: "Path of Exile Currency Prediction"
   - title: "Toxicity in Gaming Communities"
-    url: /projects/toxicityingaming/
-    imglink: /assets/images/greenbeans.jpg
-    content: "League toxic, FFXIV not"

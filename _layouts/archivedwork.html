@@ -20,6 +20,28 @@ layout: default
     {% unless page.header.overlay_color or page.header.overlay_image %}
       <h1 id="page-title" class="page__title">{{ page.title }}</h1>
     {% endunless %}
+    <h2>Works in Progress</h2>
+    <!-- <div class=separation-border style="width:100%; padding-top:0em;"></div> -->
+    {% for item in site.data.projectdata.inprogress %}
+    <div class="archsec">
+      <a href={{item.url}}>
+        <div class="archived-projects">
+          <div class="thumbnail-image" style="background-image: url('{{item.imglink}}'); background-size: cover; background-position: center; height:100%; width:200px;">
+          <!-- <img src="{{ item.imglink }}" alt="{{item.title}}" class="thumbnailimage"> -->
+          </div>
+          <div class="project-details">
+            <div class="project-title">
+              {{item.title}}
+            </div>
+            <div class="project-content">
+              {{item.content}}
+            </div>
+          </div>
+        </div>
+      </a>
+      <div class=separation-border></div>
+    </div>
+    {% endfor %}
     <h2>Coursework</h2>
     <!-- <div class=separation-border style="width:100%; padding-top:0em;"></div> -->
     {% for item in site.data.projectdata.schoolwork %}

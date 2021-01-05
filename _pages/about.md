@@ -1,10 +1,16 @@
 ---
 permalink: /about/
 title: "About"
-layout: archive
+layout: archivehome
 author_profile: true
 ---
 
-Tempor velit sint sunt ipsum tempor enim ad qui ullamco. Est dolore anim ad velit duis dolore minim sunt aliquip amet commodo labore. Ut eu pariatur aute ea aute excepteur laborum. Esse ea esse excepteur minim mollit qui cillum excepteur ex dolore magna. Labore deserunt fugiat incididunt incididunt sint ea. Consequat dolore aute laboris quis proident quis non et est consectetur ex eiusmod sit culpa.
+I'm a graduate from the Cooper Union in New York City with a Bachelors of Engineering and Masters of Engineering in Mechanical Engineering. Funny how I want to work in data science.
 
-Cupidatat ea do et in excepteur in. Ad nostrud ut est esse eu duis ea sunt eiusmod. Aliquip tempor veniam sint elit fugiat. Velit incididunt laboris amet incididunt labore dolore irure velit excepteur commodo deserunt laborum. Consectetur eu fugiat veniam veniam Lorem labore magna eiusmod. Ea occaecat reprehenderit pariatur consectetur minim labore ut aliquip.
+I've been interested in feedback control systems and data-driven decision making and have only recently managed to articulate that interest in the projects on this website. I love everything related to tech from software to hardware, from the earth to the stars.
+
+There's a lot to do and I've made it a personal goal to learn as much as I can.
+
+Check out my [TEDxCooperUnion talk](https://www.youtube.com/watch?v=1797la1wSws) where I talk about the stuff I learned during my time at [Invention Factory](https://inventionfactory.org/inventions/spill-resistant-disposable-cup).
+
+My hobbies include gaming ([VALORANT](https://playvalorant.com/en-gb/), and [Path of Exile](https://www.pathofexile.com/)), reading [xianxia](https://www.wuxiaworld.com/novel/a-will-eternal) novels or other [sci-fi](https://www.amazon.com/Three-Body-Problem-Cixin-Liu/dp/0765382032)/[fantasy](https://www.amazon.com/Promise-Blood-Powder-Mage-Book-ebook/dp/B0092XHPIG/ref=sr_1_1?dchild=1&keywords=promise+of+powder&qid=1609189835&s=books&sr=1-1) genres, and listening to some of my favorite artists.
