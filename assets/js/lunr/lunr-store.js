@@ -1,49 +1,13 @@
----
-layout: none
----
-
-var store = [
-  {%- for c in site.collections -%}
-    {%- if forloop.last -%}
-      {%- assign l = true -%}
-    {%- endif -%}
-    {%- assign docs = c.docs | where_exp:'doc','doc.search != false' -%}
-    {%- for doc in docs -%}
-      {%- if doc.header.teaser -%}
-        {%- capture teaser -%}{{ doc.header.teaser }}{%- endcapture -%}
-      {%- else -%}
-        {%- assign teaser = site.teaser -%}
-      {%- endif -%}
-      {
-        "title": {{ doc.title | jsonify }},
-        "excerpt":
-          {%- if site.search_full_content == true -%}
-            {{ doc.content | newline_to_br |
-              replace:"<br />", " " |
-              replace:"</p>", " " |
-              replace:"</h1>", " " |
-              replace:"</h2>", " " |
-              replace:"</h3>", " " |
-              replace:"</h4>", " " |
-              replace:"</h5>", " " |
-              replace:"</h6>", " "|
-            strip_html | strip_newlines | jsonify }},
-          {%- else -%}
-            {{ doc.content | newline_to_br |
-              replace:"<br />", " " |
-              replace:"</p>", " " |
-              replace:"</h1>", " " |
-              replace:"</h2>", " " |
-              replace:"</h3>", " " |
-              replace:"</h4>", " " |
-              replace:"</h5>", " " |
-              replace:"</h6>", " "|
-            strip_html | strip_newlines | truncatewords: 50 | jsonify }},
-          {%- endif -%}
-        "categories": {{ doc.categories | jsonify }},
-        "tags": {{ doc.tags | jsonify }},
-        "url": {{ doc.url | absolute_url | jsonify }},
-        "teaser": {{ teaser | absolute_url | jsonify }}
-      }{%- unless forloop.last and l -%},{%- endunless -%}
-    {%- endfor -%}
-  {%- endfor -%}]
+var store = [{
+        "title": "Using Markov Chains and Monte Carlo to solve probability questions",
+        "excerpt":"The problem: suppose you have a hat with the numbers from 1 to N. Lets say you pick out with replacement, N-numbers, and write them down. Now replace the numbers in the hat with the new numbers you’ve written down. Draw another N-numbers and repeat. On average, how many draws...","categories": ["Blog"],
+        "tags": ["probability","monte carlo","markov chain"],
+        "url": "/blog/Draw-From-A-Hat-Until-Same/",
+        "teaser": null
+      },{
+        "title": "Finishing up and deploying my site!",
+        "excerpt":"It’s been a while but I finally managed to finish my site! Thanks to a lot of help from my friends, especially Alec Huang who gave me a couple of nice lectures on HTML/CSS/JS. Check out his own site at teamnex.us. I wanted to make a place that could act...","categories": ["Blog"],
+        "tags": ["work complete","update","site"],
+        "url": "/blog/Work-Complete/",
+        "teaser": null
+      }]

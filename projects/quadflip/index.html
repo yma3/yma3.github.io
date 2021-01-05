@@ -1,0 +1,286 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Learning a Quadcopter Flip with Reinforcement Learning - λ∇</title>
+<meta name="description" content="The Gradient of Me is a personal website dedicated to learning fundamental concepts in machine learning, data science, and computer science.">
+
+
+  <meta name="author" content="Yingfu (Ben) Ma">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="λ∇">
+<meta property="og:title" content="Learning a Quadcopter Flip with Reinforcement Learning">
+<meta property="og:url" content="/projects/quadflip/">
+
+
+  <meta property="og:description" content="The Gradient of Me is a personal website dedicated to learning fundamental concepts in machine learning, data science, and computer science.">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/projects/quadflip/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Yingfu Ma",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="λ∇ Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--archive">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          λ∇
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/projectspage/">Work</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="archive">
+    
+      <h1 id="page-title" class="page__title">Learning a Quadcopter Flip with Reinforcement Learning</h1>
+    
+    <p>Usually for a controls problem such as a quadcopter flip, there are two controllers involved. The first is an energy controller which adds energy to the system. This causes the quadcopter to throw itself into the air to initiate the flip. As the quadcopter comes around, the second controller, a stabilizing  controller, comes into play and returns the drone to its original position.</p>
+
+<p>In this project, my partner <a href="https://github.com/jollybao">Jialun Bao</a> and I attempt to use neural networks to develop an end-to-end control law to govern the quadcopter flip. What we ended with was a neural controller as an energy gain controller to initiate the flip, and then a classical stabilizing PI controller as the stabilizing controller. This hybrid controller allowed for a 2D simulated model of a quadcopter to successfully flip.</p>
+
+<p style="text-align:center"><img src="/assets/images/quadflip/2d-good.gif" alt="QuadFlipGood" /></p>
+
+<h3 id="3d-simulation">3D Simulation</h3>
+
+<p>This 3D simulation was built by <a href="https://github.com/abhijitmajumdar/Quadcopter_simulator">Abhijit Majumdar</a>. The 3D quadcopters have 6 total states, 3 positional states for the x, y, and z positions, and 3 orienting states, which are the Euler angles of the model. We note that a quarternion model may provide a better system when defining the reward structure of the quadcopter.</p>
+
+<p>The quadcopter is controlled by four thrust vectors at the ends of each of the arms which correspond to each rotor. Our control system relies on controlling the thrust from the rotors. We assume an internal controller is used to further convert our desired control action into the proper motor voltages, but is not considered in our design.</p>
+
+<p>We define our reward as a positive fixed amount per instant the simulation is within some predefined stable bounds, with a penalty based on the euclidean distance the state vector is from the target state vector. With this system, we achieve attitude (orientation) control of the quadcopter, however, we notice positional drift.</p>
+
+<p style="text-align:center"><img src="/assets/images/quadflip/3d-attitudecontrol.gif" alt="3DAttitude" /></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><img src="/assets/images/quadflip/3drewardfinal.png" alt="3Dreward" /></td>
+      <td><img src="/assets/images/quadflip/3dposfinal.png" alt="3Dstates" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We continued to test with different reward structures but none of them managed to create a working stabilizing controller to form the basis of our flip. We decided to tackle a simplified 2D version of the problem.</p>
+
+<h3 id="2d-simulation">2D Simulation</h3>
+
+<p>We built the 2D simulation based on first principles and used a similar code base to the 3D simulator. This 2D form has 2 positional states, a y and z axis, and 2 rotational components for a total of 4 states. We initially tried to use the neural network to learn a stabilizing controller, but we ran into similar problems as with the 3D case. Therefore, we chose to learn an energy controller instead and implemented a PI controller as the stabilizing controller. The end result was a network that was capable of performing the flip. We see most states as well as the derivatives to those states approaching zero near the end of the maneuver.</p>
+
+<p style="text-align:center"><img src="/assets/images/quadflip/2d-good.gif" alt="QuadFlipGood" /></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><img src="/assets/images/quadflip/2dreward.png" alt="2Dreward" /></td>
+      <td><img src="/assets/images/quadflip/2dstates.png" alt="2Dstates" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="proximal-policy-optimization-ppo">Proximal Policy Optimization (PPO)</h3>
+
+<p>The reinforcement learning algorithm we tried to use was Proximal Policy Optimization (PPO), an improvement over Trust-Region Policy Optimization (TRPO). We chose an onboard gradient-based method, because we had continuous action states. Like all RL algorithms, we aim to maximize the expected discounted rewards. More details on TRPO and PPO.</p>
+
+<h3 id="blooper-reel">Blooper Reel</h3>
+
+<p>The fun part about reinforcement learning is that you don’t really know what the algorithm will do and where it will end up. Every so often we would visually sample the network and evaluate the performance. This led to some interesting results.</p>
+
+<table style="text-align:center">
+  <tbody>
+    <tr>
+      <td><img src="/assets/images/quadflip/3d-failflop.gif" alt="3Dfail" /></td>
+      <td><img src="/assets/images/quadflip/2d-fail.gif" alt="2Dfail" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="references">References</h1>
+<ol>
+  <li><a href="https://arxiv.org/abs/1502.05477">Trust Region Policy Optimization</a> - Schulman, Levine, et al. (2015)</li>
+  <li><a href="https://arxiv.org/abs/1707.06347">Proximal Policy Optimization Algorithms</a> - Schulman, Wolski, et al. (2017)</li>
+  <li>R. Beard, <em> Quadrotor Dynamics and Control</em>, 2008.</li>
+  <li>V. Kumar, “2-d quadrotor control” (Lecture)</li>
+  <li>P. H. et al, “Deep reinforcement learning that matters,” 2017.</li>
+</ol>
+
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Yingfu Ma. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

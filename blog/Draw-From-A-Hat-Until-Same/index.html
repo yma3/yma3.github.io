@@ -1,0 +1,563 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Using Markov Chains and Monte Carlo to solve probability questions - λ∇</title>
+<meta name="description" content="The problem: suppose you have a hat with the numbers from 1 to N. Lets say you pick out with replacement, N-numbers, and write them down. Now replace the numbers in the hat with the new numbers you’ve written down. Draw another N-numbers and repeat. On average, how many draws do you need before all of the numbers are the same?  Let’s look at this from the standpoint of N = 3. When N = 3, we have the numbers [1, 2, 3] in our hat. Let’s draw N-numbers, so 3 numbers. Suppose we get [1,1,3]. We replace our old hat numbers with this new batch, and draw again. Maybe we’ll get [1,1,1]. If so, then we’re done! And in 2-steps no less!  But maybe we get unlucky. Maybe we get so unlucky that it takes us 100 tries before we get it! So our question is, on AVERAGE, what is the probability of getting to that final state?  Well, let’s use the N = 3 example. There are 3 possible states.    All numbers of unique   2 of one number, 1 of another   All 3 numbers are the same   In other words, that maximum number of a single element in the set is 1, 2, or 3. We’re given that we start at state 1, where all the numbers are unique. We have the numbers from 1 to N in our hat after all. When we draw numbers out of the hat, there are a few possibilities.  We could go from state 1 and get the same 3 numbers, in which case we didn’t go anywhere. We could draw 2 numbers the same and one different, and advance to state 2. Or we could draw all 3 numbers the same and go immediately to state 3! Do not collect $200.  What’s the probabilities of each occurring? Well for the first case, to draw 3 individual numbers from 3 is 2/9. That’s because there’s a 3/3 chance of picking the first number, a 2/3 chance of picking one of the other two numbers, and a 1/3 chance of picking the last number to complete our set. That’s 2/9.  For the last case of all numbers the same, that’s a 1/27 chance for it to happen for any number! Because there are 3 numbers, the total probability of that situation is 1/9.  If we decide to use the laws of probability, our life would be easy and we could say that to reach state 2 we would need 6/9, or 2/3 probability because our total probabilities must equal 1. True, but let’s do it the other way.  We’re looking at a binomial distribution here. Out of the 3 numbers, we need to choose 2 of them. Then we have a 1/9 chance of getting 2 of those numbers, and a 2/3 of getting any of the other two. This results in a probability of 2/9. How do we get 2/3? Well, we’re missing the fact that there are 3 possible numbers to choose from!  The combination 3 choose 2 only decides how many ways can we choose 2 numbers out of 3. It doesn’t tell us which of the numbers is double and which one is the single! That means we need to account for each of the 3 numbers being the double, which means we multiply by 3 and get a total probability of 2/3.  Perfect.  Let’s now go on from state 2. Fortunately for us, state 2 means we have 2 numbers being the same. This, however, means that we’ve gotten rid of a number to accommodate the duplicate! This means it’s impossible for state 2 to go back to state 1, because at best, we’d only be back at state 2! We can’t recover that number that we’ve lost. That makes our lives a bit easier.  At state 2, the worst we get is to return to state 2. The best case is to go to state 3, and be done. The probability of reaching state 3 is 1/3.  We have a 1/3 chance to choose the less likely number, which means we have to do that two more for a total of 1/27. What about if we pick the 2/3 number? Then we have an 8/27 chance of picking that three times! This totals to 9/27 or 1/3!  With our rules of probability, then we must know that the probability that state 2 remains at state 2 is 2/3 so the probabilities can equal 1.  Turns out our overly complex explanation can be easily summarized in a Markov Chain! If you don’t know what they are, I highly recommend reading about them here.  The cool thing about MCs is that we can directly solve for our expected value problem here! We write our MC in a transition matrix. If you’re familiar with graphs, this is the adjacency matrix associated with this graph! We can use this to solve our problem!  To do so, I’ll refer to this PDF, but I’ll skip the details. When we chug out the math, we get a whopping 27/7. How do we know this is right?  Let’s simulate it! We can use the method of Monte Carlo, or basically just a bunch of mass simulations to test our random processes. With a pretty short Python code, we get a simulated average of 3.855! Super close to the true value.  So that’s that. Pretty easy right? Now let’s try with N = 4…  Just kidding. Just run the simulation, come back after some water, and get our answer. From random processes, Monte Carlo works just fine.">
+
+
+  <meta name="author" content="Yingfu (Ben) Ma">
+  
+  <meta property="article:author" content="Yingfu (Ben) Ma">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="λ∇">
+<meta property="og:title" content="Using Markov Chains and Monte Carlo to solve probability questions">
+<meta property="og:url" content="/blog/Draw-From-A-Hat-Until-Same/">
+
+
+  <meta property="og:description" content="The problem: suppose you have a hat with the numbers from 1 to N. Lets say you pick out with replacement, N-numbers, and write them down. Now replace the numbers in the hat with the new numbers you’ve written down. Draw another N-numbers and repeat. On average, how many draws do you need before all of the numbers are the same?  Let’s look at this from the standpoint of N = 3. When N = 3, we have the numbers [1, 2, 3] in our hat. Let’s draw N-numbers, so 3 numbers. Suppose we get [1,1,3]. We replace our old hat numbers with this new batch, and draw again. Maybe we’ll get [1,1,1]. If so, then we’re done! And in 2-steps no less!  But maybe we get unlucky. Maybe we get so unlucky that it takes us 100 tries before we get it! So our question is, on AVERAGE, what is the probability of getting to that final state?  Well, let’s use the N = 3 example. There are 3 possible states.    All numbers of unique   2 of one number, 1 of another   All 3 numbers are the same   In other words, that maximum number of a single element in the set is 1, 2, or 3. We’re given that we start at state 1, where all the numbers are unique. We have the numbers from 1 to N in our hat after all. When we draw numbers out of the hat, there are a few possibilities.  We could go from state 1 and get the same 3 numbers, in which case we didn’t go anywhere. We could draw 2 numbers the same and one different, and advance to state 2. Or we could draw all 3 numbers the same and go immediately to state 3! Do not collect $200.  What’s the probabilities of each occurring? Well for the first case, to draw 3 individual numbers from 3 is 2/9. That’s because there’s a 3/3 chance of picking the first number, a 2/3 chance of picking one of the other two numbers, and a 1/3 chance of picking the last number to complete our set. That’s 2/9.  For the last case of all numbers the same, that’s a 1/27 chance for it to happen for any number! Because there are 3 numbers, the total probability of that situation is 1/9.  If we decide to use the laws of probability, our life would be easy and we could say that to reach state 2 we would need 6/9, or 2/3 probability because our total probabilities must equal 1. True, but let’s do it the other way.  We’re looking at a binomial distribution here. Out of the 3 numbers, we need to choose 2 of them. Then we have a 1/9 chance of getting 2 of those numbers, and a 2/3 of getting any of the other two. This results in a probability of 2/9. How do we get 2/3? Well, we’re missing the fact that there are 3 possible numbers to choose from!  The combination 3 choose 2 only decides how many ways can we choose 2 numbers out of 3. It doesn’t tell us which of the numbers is double and which one is the single! That means we need to account for each of the 3 numbers being the double, which means we multiply by 3 and get a total probability of 2/3.  Perfect.  Let’s now go on from state 2. Fortunately for us, state 2 means we have 2 numbers being the same. This, however, means that we’ve gotten rid of a number to accommodate the duplicate! This means it’s impossible for state 2 to go back to state 1, because at best, we’d only be back at state 2! We can’t recover that number that we’ve lost. That makes our lives a bit easier.  At state 2, the worst we get is to return to state 2. The best case is to go to state 3, and be done. The probability of reaching state 3 is 1/3.  We have a 1/3 chance to choose the less likely number, which means we have to do that two more for a total of 1/27. What about if we pick the 2/3 number? Then we have an 8/27 chance of picking that three times! This totals to 9/27 or 1/3!  With our rules of probability, then we must know that the probability that state 2 remains at state 2 is 2/3 so the probabilities can equal 1.  Turns out our overly complex explanation can be easily summarized in a Markov Chain! If you don’t know what they are, I highly recommend reading about them here.  The cool thing about MCs is that we can directly solve for our expected value problem here! We write our MC in a transition matrix. If you’re familiar with graphs, this is the adjacency matrix associated with this graph! We can use this to solve our problem!  To do so, I’ll refer to this PDF, but I’ll skip the details. When we chug out the math, we get a whopping 27/7. How do we know this is right?  Let’s simulate it! We can use the method of Monte Carlo, or basically just a bunch of mass simulations to test our random processes. With a pretty short Python code, we get a simulated average of 3.855! Super close to the true value.  So that’s that. Pretty easy right? Now let’s try with N = 4…  Just kidding. Just run the simulation, come back after some water, and get our answer. From random processes, Monte Carlo works just fine.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-01-03T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/blog/Draw-From-A-Hat-Until-Same/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Yingfu Ma",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="λ∇ Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          λ∇
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/projectspage/">Work</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/biophoto.png" alt="Yingfu (Ben) Ma" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Yingfu (Ben) Ma</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>TEDx speaker and CE raider. I like games, music, and tech in any order.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Edison, NJ, US</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:yingfu.ma.96@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="/assets/files/site_resume.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-file-pdf" aria-hidden="true"></i><span class="label">Resume</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/yma3" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/yingfu-ma-5b7201a3/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Using Markov Chains and Monte Carlo to solve probability questions">
+    <meta itemprop="description" content="The problem: suppose you have a hat with the numbers from 1 to N. Lets say you pick out with replacement, N-numbers, and write them down. Now replace the numbers in the hat with the new numbers you’ve written down. Draw another N-numbers and repeat. On average, how many draws do you need before all of the numbers are the same?Let’s look at this from the standpoint of N = 3. When N = 3, we have the numbers [1, 2, 3] in our hat. Let’s draw N-numbers, so 3 numbers. Suppose we get [1,1,3]. We replace our old hat numbers with this new batch, and draw again. Maybe we’ll get [1,1,1]. If so, then we’re done! And in 2-steps no less!But maybe we get unlucky. Maybe we get so unlucky that it takes us 100 tries before we get it! So our question is, on AVERAGE, what is the probability of getting to that final state?Well, let’s use the N = 3 example. There are 3 possible states.  All numbers of unique  2 of one number, 1 of another  All 3 numbers are the sameIn other words, that maximum number of a single element in the set is 1, 2, or 3. We’re given that we start at state 1, where all the numbers are unique. We have the numbers from 1 to N in our hat after all. When we draw numbers out of the hat, there are a few possibilities.We could go from state 1 and get the same 3 numbers, in which case we didn’t go anywhere. We could draw 2 numbers the same and one different, and advance to state 2. Or we could draw all 3 numbers the same and go immediately to state 3! Do not collect $200.What’s the probabilities of each occurring? Well for the first case, to draw 3 individual numbers from 3 is 2/9. That’s because there’s a 3/3 chance of picking the first number, a 2/3 chance of picking one of the other two numbers, and a 1/3 chance of picking the last number to complete our set. That’s 2/9.For the last case of all numbers the same, that’s a 1/27 chance for it to happen for any number! Because there are 3 numbers, the total probability of that situation is 1/9.If we decide to use the laws of probability, our life would be easy and we could say that to reach state 2 we would need 6/9, or 2/3 probability because our total probabilities must equal 1. True, but let’s do it the other way.We’re looking at a binomial distribution here. Out of the 3 numbers, we need to choose 2 of them. Then we have a 1/9 chance of getting 2 of those numbers, and a 2/3 of getting any of the other two. This results in a probability of 2/9. How do we get 2/3? Well, we’re missing the fact that there are 3 possible numbers to choose from!The combination 3 choose 2 only decides how many ways can we choose 2 numbers out of 3. It doesn’t tell us which of the numbers is double and which one is the single! That means we need to account for each of the 3 numbers being the double, which means we multiply by 3 and get a total probability of 2/3.Perfect.Let’s now go on from state 2. Fortunately for us, state 2 means we have 2 numbers being the same. This, however, means that we’ve gotten rid of a number to accommodate the duplicate! This means it’s impossible for state 2 to go back to state 1, because at best, we’d only be back at state 2! We can’t recover that number that we’ve lost. That makes our lives a bit easier.At state 2, the worst we get is to return to state 2. The best case is to go to state 3, and be done. The probability of reaching state 3 is 1/3.We have a 1/3 chance to choose the less likely number, which means we have to do that two more for a total of 1/27. What about if we pick the 2/3 number? Then we have an 8/27 chance of picking that three times! This totals to 9/27 or 1/3!With our rules of probability, then we must know that the probability that state 2 remains at state 2 is 2/3 so the probabilities can equal 1.Turns out our overly complex explanation can be easily summarized in a Markov Chain! If you don’t know what they are, I highly recommend reading about them here.The cool thing about MCs is that we can directly solve for our expected value problem here! We write our MC in a transition matrix. If you’re familiar with graphs, this is the adjacency matrix associated with this graph! We can use this to solve our problem!To do so, I’ll refer to this PDF, but I’ll skip the details. When we chug out the math, we get a whopping 27/7. How do we know this is right?Let’s simulate it! We can use the method of Monte Carlo, or basically just a bunch of mass simulations to test our random processes. With a pretty short Python code, we get a simulated average of 3.855! Super close to the true value.So that’s that. Pretty easy right? Now let’s try with N = 4…Just kidding. Just run the simulation, come back after some water, and get our answer. From random processes, Monte Carlo works just fine.">
+    <meta itemprop="datePublished" content="2021-01-03T00:00:00-05:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Using Markov Chains and Monte Carlo to solve probability questions
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The problem: suppose you have a hat with the numbers from 1 to N. Lets say you pick out with replacement, N-numbers, and write them down. Now replace the numbers in the hat with the new numbers you’ve written down. Draw another N-numbers and repeat. On average, how many draws do you need before all of the numbers are the same?</p>
+
+<p>Let’s look at this from the standpoint of N = 3. When N = 3, we have the numbers [1, 2, 3] in our hat. Let’s draw N-numbers, so 3 numbers. Suppose we get [1,1,3]. We replace our old hat numbers with this new batch, and draw again. Maybe we’ll get [1,1,1]. If so, then we’re done! And in 2-steps no less!</p>
+
+<p>But maybe we get unlucky. Maybe we get so unlucky that it takes us 100 tries before we get it! So our question is, on AVERAGE, what is the probability of getting to that final state?</p>
+
+<p>Well, let’s use the N = 3 example. There are 3 possible states.</p>
+<ol>
+  <li>All numbers of unique</li>
+  <li>2 of one number, 1 of another</li>
+  <li>All 3 numbers are the same</li>
+</ol>
+
+<p>In other words, that maximum number of a single element in the set is 1, 2, or 3. We’re given that we start at state 1, where all the numbers are unique. We have the numbers from 1 to N in our hat after all. When we draw numbers out of the hat, there are a few possibilities.</p>
+
+<p>We could go from state 1 and get the same 3 numbers, in which case we didn’t go anywhere. We could draw 2 numbers the same and one different, and advance to state 2. Or we could draw all 3 numbers the same and go immediately to state 3! Do not collect $200.</p>
+
+<p>What’s the probabilities of each occurring? Well for the first case, to draw 3 individual numbers from 3 is 2/9. That’s because there’s a 3/3 chance of picking the first number, a 2/3 chance of picking one of the other two numbers, and a 1/3 chance of picking the last number to complete our set. That’s 2/9.</p>
+
+<p>For the last case of all numbers the same, that’s a 1/27 chance for it to happen for any number! Because there are 3 numbers, the total probability of that situation is 1/9.</p>
+
+<p>If we decide to use the laws of probability, our life would be easy and we could say that to reach state 2 we would need 6/9, or 2/3 probability because our total probabilities must equal 1. True, but let’s do it the other way.</p>
+
+<p>We’re looking at a binomial distribution here. Out of the 3 numbers, we need to choose 2 of them. Then we have a 1/9 chance of getting 2 of those numbers, and a 2/3 of getting any of the other two. This results in a probability of 2/9. How do we get 2/3? Well, we’re missing the fact that there are 3 possible numbers to choose from!</p>
+
+<p>The combination 3 choose 2 only decides how many ways can we choose 2 numbers out of 3. It doesn’t tell us which of the numbers is double and which one is the single! That means we need to account for each of the 3 numbers being the double, which means we multiply by 3 and get a total probability of 2/3.</p>
+
+<p>Perfect.</p>
+
+<p>Let’s now go on from state 2. Fortunately for us, state 2 means we have 2 numbers being the same. This, however, means that we’ve gotten rid of a number to accommodate the duplicate! This means it’s impossible for state 2 to go back to state 1, because at best, we’d only be back at state 2! We can’t recover that number that we’ve lost. That makes our lives a bit easier.</p>
+
+<p>At state 2, the worst we get is to return to state 2. The best case is to go to state 3, and be done. The probability of reaching state 3 is 1/3.</p>
+
+<p>We have a 1/3 chance to choose the less likely number, which means we have to do that two more for a total of 1/27. What about if we pick the 2/3 number? Then we have an 8/27 chance of picking that three times! This totals to 9/27 or 1/3!</p>
+
+<p>With our rules of probability, then we must know that the probability that state 2 remains at state 2 is 2/3 so the probabilities can equal 1.</p>
+
+<p>Turns out our overly complex explanation can be easily summarized in a Markov Chain! If you don’t know what they are, I highly recommend reading about them <a href="https://en.wikipedia.org/wiki/Markov_chain">here</a>.</p>
+
+<p>The cool thing about MCs is that we can directly solve for our expected value problem here! We write our MC in a transition matrix. If you’re familiar with graphs, this is the adjacency matrix associated with this graph! We can use this to solve our problem!</p>
+
+<p>To do so, I’ll refer to <a href="http://www.aquatutoring.org/ExpectedValueMarkovChains.pdf">this PDF</a>, but I’ll skip the details. When we chug out the math, we get a whopping 27/7. How do we know this is right?</p>
+
+<p>Let’s simulate it! We can use the method of Monte Carlo, or basically just a bunch of mass simulations to test our random processes. With a pretty short Python code, we get a simulated average of 3.855! Super close to the true value.</p>
+
+<p>So that’s that. Pretty easy right? Now let’s try with N = 4…</p>
+
+<p>Just kidding. Just run the simulation, come back after some water, and get our answer. From random processes, Monte Carlo works just fine.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#markov-chain" class="page__taxonomy-item" rel="tag">markov chain</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#monte-carlo" class="page__taxonomy-item" rel="tag">monte carlo</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#probability" class="page__taxonomy-item" rel="tag">probability</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#blog" class="page__taxonomy-item" rel="tag">Blog</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-01-03T00:00:00-05:00">January 3, 2021</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Using+Markov+Chains+and+Monte+Carlo+to+solve+probability+questions%20%2Fblog%2FDraw-From-A-Hat-Until-Same%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fblog%2FDraw-From-A-Hat-Until-Same%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Fblog%2FDraw-From-A-Hat-Until-Same%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="/blog/Work-Complete/" class="pagination--pager" title="Finishing up and deploying my site!
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/Work-Complete/" rel="permalink">Finishing up and deploying my site!
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          less than 1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">It’s been a while but I finally managed to finish my site! Thanks to a lot of help from my friends, especially Alec Huang who gave me a couple of nice lectur...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Yingfu Ma. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

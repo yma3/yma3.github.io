@@ -1,0 +1,255 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Geometry Dash - λ∇</title>
+<meta name="description" content="The Gradient of Me is a personal website dedicated to learning fundamental concepts in machine learning, data science, and computer science.">
+
+
+  <meta name="author" content="Yingfu (Ben) Ma">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="λ∇">
+<meta property="og:title" content="Geometry Dash">
+<meta property="og:url" content="/projects/geometrydash/">
+
+
+  <meta property="og:description" content="The Gradient of Me is a personal website dedicated to learning fundamental concepts in machine learning, data science, and computer science.">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/projects/geometrydash/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Yingfu Ma",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="λ∇ Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--archive">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          λ∇
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/projectspage/">Work</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="archive">
+    
+      <h1 id="page-title" class="page__title">Geometry Dash</h1>
+    
+    <p>Geometry Dash is a video game where you play as a block that jumps to avoid spikes. Because the game is an autoscroller, the only controls is pressing the jump button at the correct intervals. All of the stages are the same every time, so technically, hard coding a jumping sequence at specific time intervals could complete a stage, but it wouldn’t allow for the program to complete other stages.</p>
+
+<h3 id="inputs">Inputs</h3>
+
+<p>For our AI to be able to actually play the game, we need to give it information about where the spikes are. We don’t have internal data on where they are, so the best we can do is use whatever the user gets. In this case, it’s the screen.</p>
+
+<p>This situation would best fit a convolutional neural network where we feed the screen and extract the features regarding the spikes to the network. There are many approaches we could take. One is directly feeding the screen and learning a direct binary output on when to jump. This is the most end-to-end approach but could be the most difficult to learn. Alternatively, we can use the screen and perform object identification to first identify spikes. We can then feed the location of the spike as a distance and let the AI determine when to jump based on that distance.</p>
+
+<p>As we try to build this AI, we can see which method works best.</p>
+
+<table style="text-align:center">
+  <tbody>
+    <tr>
+      <td><img src="/assets/images/geodash/geodash.PNG" alt="Geodash" /></td>
+      <td><img src="/assets/images/geodash/geodash_grey.PNG" alt="GeodashGrey" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>When downsampled to a 128x128 image, the screen for Geometry Dash looks like this.</p>
+
+<p style="text-align:center"><img src="/assets/images/geodash/downsampled.PNG" alt="GeodashDown" /></p>
+
+<h2 id="training">Training</h2>
+<h3 id="genetic-algorithm">Genetic Algorithm</h3>
+
+<p>The model can be trained in various ways. As titled, the first I’d like to try is using a genetic algorithm. This is an optimization algorithm that explores an optimization space by creating generations of individuals. The performance of each individual is measured, and those that perform the best are used to create the next generation.</p>
+
+<h3 id="reinforcement-learning">Reinforcement Learning</h3>
+
+<p>The alternative approach is using reinforcement learning to create a model. As this is a discretized action space, we could look into deep-Q networks to solve this problem. As this is an onboard problem (we don’t have a model to use, we have to learn by actually playing the game itself), a DQN implemented with memory could be very useful. However, we would be saving an entire screen’s worth of information at every instance.</p>
+
+<h3 id="resetting-the-game">Resetting the game</h3>
+<p>In order to determine that we’ve finished an instance of the game, we check to see if the reset button is available. We take a small bounding box where the reset button should be and compare it directly to a saved image of the same “reset” condition. Whenever this condition is met, we stop our training for the instance.</p>
+
+<p style="text-align:center"><img src="/assets/images/geodash/gameover.PNG" alt="GameOver" /></p>
+
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Yingfu Ma. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,278 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Toxicity in Gaming Communities - λ∇</title>
+<meta name="description" content="The Gradient of Me is a personal website dedicated to learning fundamental concepts in machine learning, data science, and computer science.">
+
+
+  <meta name="author" content="Yingfu (Ben) Ma">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="λ∇">
+<meta property="og:title" content="Toxicity in Gaming Communities">
+<meta property="og:url" content="/projects/toxicityingaming/">
+
+
+  <meta property="og:description" content="The Gradient of Me is a personal website dedicated to learning fundamental concepts in machine learning, data science, and computer science.">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/projects/toxicityingaming/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Yingfu Ma",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="λ∇ Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--archive">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          λ∇
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/projectspage/">Work</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="archive">
+    
+      <h1 id="page-title" class="page__title">Toxicity in Gaming Communities</h1>
+    
+    <p>Let’s talk toxicity. When it comes to prevalent communities, especially competitive ones, toxicity becomes a big problem that affects the experience of the player. Nobody wants to play with a toxic player on their team, and sometimes the jokes and the “fun” get a little out of hand. I’ve even been the one to occasionally act in this manner with both the friends I’m playing with, and the opponents I’m playing against. It’s led to a lot of difficulties and has damaged the relationships I’ve had with others.</p>
+
+<p>Let’s face it. Being toxic sucks for everyone.</p>
+
+<p>As a member in many gaming communities, I wanted to gauge the toxicity of some of the most widely known games being currently played. I chose to look at League of Legends (LoL), World of Warcraft (WoW), and Final Fantasy XIV (FF14), as three cases for this project. The former two were well known for their toxicity, while the latter was known for being a very inclusive community. I used Reddit comments from each subreddit as the inputs to the model and performed a binary classification task to determine whether or not the comment was toxic.</p>
+
+<h2 id="toxic-comment-dataset">Toxic Comment Dataset</h2>
+
+<p>To perform the classification task, I used the <a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge">Jigsaw Toxic Comment Dataset</a> to build a model. I then applied the same model to the curated set of Reddit comments for final analysis.</p>
+
+<p>To solve the Jigsaw Toxic Comment Challenge, I used Tensorflow and Keras to implement an RNN with a word-embedding layer and bidirectional LSTMs. As the comments are a sequence of texts, this was a relatively standard model for solving NLP classification tasks.</p>
+
+<p>The original dataset was a multiclass classification problem with data being specified as either “toxic”, “severely toxic”, “obscene”, “threats”, “insults”, and “identity hate”. Comments can be any of these, not necessarily just one. To simplify the problem, I reduced it to a binary classification task. This was to achieve better results in simply identifying toxic and nontoxic as opposed to determining the type of toxicity, although a well-trained model built on the original dataset could provide further insights.</p>
+
+<p>The exact summary and hyperparameters of the model used can be found in the <a href="https://github.com/yma3/Toxicity-In-Gaming-Communities">Jupyter notebook</a>.</p>
+
+<table style="text-align:center">
+  <tbody>
+    <tr>
+      <td><img src="/assets/images/toxcom/acc.png" alt="Accuracy" /></td>
+      <td><img src="/assets/images/toxcom/loss.png" alt="Loss" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The initial training resulted in a model with the confusion matrix as follows. We see a final accuracy of 0.8799, and a misclass rate of 0.1201. This has an F1-score of 0.8843 and an MCC of 0.762.</p>
+
+<p style="text-align:center"><img src="/assets/images/toxcom/confmat.png" alt="ConfMat" /></p>
+
+<p>To improve the model, we look at the Receiver-Operating Characteristic Curve (ROC) and the Area Under the Curve (AUC). This graph shows the performance of the model when the threshold is varied between 0 and 1. The closer to the top left corner, the better. As there is only one model being observed, we don’t need the AUC to determine anything in this situation, however the AUC would normally be used when comparing multiple models.</p>
+
+<p style="text-align:center"><img src="/assets/images/toxcom/rocauc.png" alt="ROCAUC" /></p>
+
+<p>With the graph, the optimal threshold is 0.22. With the new threshold, we can generate a new confusion matrix to determine the performance of the optimized model.</p>
+
+<p style="text-align:center"><img src="/assets/images/toxcom/confmatopt.png" alt="OptimizedConfMat" /></p>
+
+<p>This model has a higher accuracy by better classifying true negatives at a smaller cost to the true positives, as shown by the optimization of the ROC/AUC. Naturally, the better model as an F1-score of 0.8901 and an MCC of 0.782.</p>
+
+<p>This model is applied to the dataset of Reddit comments to determine the toxicity of the three subreddits.</p>
+
+<h3 id="reddit-comments-data">Reddit Comments Data</h3>
+<p>A dataset of Reddit comments was curated using the Pushshift API. A weeks worth of comments from the three subreddits /r/ffxiv, /r/leagueoflegends/, and /r/wow were taken between 7/30/2020 to 8/6/2020. These dates were chosen as the most recent weeks worth of data at that time. Adding additional subreddits is simply a matter of pulling more data from the PushshiftAPI.</p>
+
+<p>These comments were placed into a Pandas dataframe and padded before being passed into the model for classification. The end result was as follows:</p>
+
+<p>Percentage of Comments that are Toxic in Subreddits</p>
+<ol>
+  <li>FFXIV: 6.1791%</li>
+  <li>WoW: 8.1006%</li>
+  <li>LoL: 9.8211%</li>
+</ol>
+
+<p>The results were similar to what I expected. FFXIV was known to have a more inclusive community, and thus, had a lesser portion of toxic comments than both WoW and LoL.</p>
+
+<h3 id="future-work">Future Work</h3>
+<p>Getting data from the subreddits and then labeling them into a dev-set would give a representation of how our model is doing on the actual data (subreddit comments). The current validation set and test set comes from the Jigsaw comment challenge, and is not of the same data distribution of subreddit comments. By having labeled data and then using a transfer learning approach, we can develop a model that performs better on the subreddit comments.</p>
+
+<p>Also, tuning the model to perform better on the Jigsaw training-dev set could also provide a better starting point for our model.</p>
+
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Yingfu Ma. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

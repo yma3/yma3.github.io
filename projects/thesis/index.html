@@ -1,0 +1,246 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Thesis - λ∇</title>
+<meta name="description" content="The Gradient of Me is a personal website dedicated to learning fundamental concepts in machine learning, data science, and computer science.">
+
+
+  <meta name="author" content="Yingfu (Ben) Ma">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="λ∇">
+<meta property="og:title" content="Thesis">
+<meta property="og:url" content="/projects/thesis/">
+
+
+  <meta property="og:description" content="The Gradient of Me is a personal website dedicated to learning fundamental concepts in machine learning, data science, and computer science.">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/projects/thesis/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Yingfu Ma",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="λ∇ Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--archive">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          λ∇
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/projectspage/">Work</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="archive">
+    
+      <h1 id="page-title" class="page__title">Thesis</h1>
+    
+    <p>Controls is an interesting field. It’s what keeps our airplanes in the air, and what keeps our homes at the perfect temperature. It’s how farmers keep grain at the right humidity, and how SpaceX lands their Falcon-9s. The hard part about controls is modeling how the system normally behaves, because that’s really one of the most important components of any feedback controller.</p>
+
+<p>You can imagine trying to model the dynamics of a system is pretty difficult, and approximations have to be made all of the time to simplify even what seem to be easy problems. Even a pendulum, a simple ball on a stick, exhibits enough nonlinear behavior that approximations must be made to create these working models.</p>
+
+<p>Building detailed models based on the physics of a system is hard. Fortunately, getting data on the system dynamics is easier. We look to using machine learning to model a mechanical system’s behavior. As an extension, we use machine learning to learn a control law that stabilizes a rotary pendulum. We choose this because it’s a 3-dimensional problem with two nonlinear frames, a rotary arm and a pendulum arm.</p>
+
+<p style="text-align:center;"><img src="/assets/images/thesis/qubeservo2.jpg" width="40%" />.</p>
+
+<p>The following is a brief overview of the objectives of <a href="https://github.com/yma3/thesis">my thesis</a>. Please refer to it for more details.</p>
+
+<h3 id="static-models">Static models</h3>
+<p>We first learn a direct static model of a mechanical system using a neural network. We choose to work with the same framework as this <a href="https://arxiv.org/abs/1907.07587">paper</a> that introduces differentiable programming (delP) with a trebuchet. We wanted to apply this to the systems that we’re working with, so we chose to tackle this problem in Python.</p>
+
+<p>The issue with learning mechanical systems is that the outputs to the neural network are control law outputs. They tell some actuator to the system how to behave. The result of that actuation is a change in the dynamics, and therefore a change in the states to the system. However, loss functions make the most sense when we try to regulate the states of the system to a desired state. We allow the control law to  fluctuate and be whatever is needed to reach the desired state.</p>
+
+<p>The issue is now that our desired loss functions are no longer differentiable in the outputs of our neural network, because we need to pass our inputs through an ODE-solver. Connecting the two and allowing for gradients to be propagated back through the ODE solution step back into the neural network is the goal of differentiable programming. We chose to use a finite difference estimation to solve for the gradient at the output which is then fed back into the neural network through backpropagation.</p>
+
+<p>We learned the dynamics of the trebuchet as well as a control law directly and are able to reach specific targets with an mean absolute error of ~1.22%. By changing the environmental states such as wind speed and target distance, we can determine the optimal control law needed to reach that target.</p>
+
+<h3 id="dynamic-models">Dynamic models</h3>
+<p>When it comes to dynamic models such as the rotary pendulum, we tried learning the control law directly. The issue there is that defining a good loss function that clearly outlined the desired dynamic behavior was difficult. Simply trying to zero-out the states caused the network to overshoot, because the optimal step found through gradient descent was to quickly return to the equilibrium position. However, there’s no sense of temporal tracking for the next states as would be found in a traditional feedback controller.</p>
+
+<p>This concept of tracing a “path” through the state-space is what led us to use reinforcement learning as a method to learn the control law for a dynamic model. We chose a Deep Q-Network as a baseline RL model. As DQNs require discrete action spaces, we discretized our pendulum’s control action, the torque to the pendulum arm, and learned a stabilizing model.</p>
+
+<p>The result was actually an interesting behavior in which the model was stable while moving at a constant angular velocity. Further improvements to the reward function could improve performance such that the rotary pendulum stabilizes and zeros all states.</p>
+
+<p style="text-align:center;"><img src="/assets/images/thesis/rotpend.gif" alt="Rotpend" /></p>
+
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Yingfu Ma. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,246 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Interactive MNIST Application - λ∇</title>
+<meta name="description" content="The Gradient of Me is a personal website dedicated to learning fundamental concepts in machine learning, data science, and computer science.">
+
+
+  <meta name="author" content="Yingfu (Ben) Ma">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="λ∇">
+<meta property="og:title" content="Interactive MNIST Application">
+<meta property="og:url" content="/projects/interactivemnist/">
+
+
+  <meta property="og:description" content="The Gradient of Me is a personal website dedicated to learning fundamental concepts in machine learning, data science, and computer science.">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/projects/interactivemnist/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Yingfu Ma",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="λ∇ Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--archive">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          λ∇
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/projectspage/">Work</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="archive">
+    
+      <h1 id="page-title" class="page__title">Interactive MNIST Application</h1>
+    
+    <p>The MNIST handwritten digits dataset is one of the most iconic when it comes to introducing others to the field of machine learning. At the most basic level, it’s a relatively straightforward classification problem that can be solved with a variety of techniques. My first introduction to neural networks and deep learning was through an MNIST project.</p>
+
+<p>I wanted to take another step in delving a little deeper with what we can uncover about the data, and use this project to showcase techniques and concepts, as the MNIST dataset is already well explored. I was heavily inspired by <a href="https://colah.github.io/posts/2014-10-Visualizing-MNIST/">Chris Olah’s blog on Visualizing MNIST</a> and wanted to do something similar for myself, although this time, allow the user to draw the numbers themselves.</p>
+
+<p style="text-align:center"><img src="/assets/images/mnist/app_good7.png" alt="MNIST App" /></p>
+
+<p>The application allows for users to draw in the left-most black box and outputs the 28x28 downsampled image to the right. This lets us directly see the image going into the various algorithms. There are two direct plots, the top being a t-SNE plot of a subset of the MNIST dataset with the user’s generated image included. The bottom is a plot of the first two PCA vectors, and the same subset of images, along with the user’s number.</p>
+
+<p>The right side contains three different models, a standard artificial neural network (ANN), a convolutional neural network (CNN), and a K-nearest neighbhors (KNN) model. We can see that the current “7” being drawn has been rightly predicted by the models, however, its clustering within the PCA and t-SNE are off. Due to the way I drew the “7”, the diagonal slash correlates very heavily with a “1”.</p>
+
+<p>If we open up the PCA Eigenfaces window, we can see what’s going on internally. This method of presentation is the same as Chris Olah’s. By opening the CNN Activations window, we can also see all of the outputs of the convolution layers.</p>
+
+<p style="text-align:center"><img src="/assets/images/mnist/eigenvalues_good7.png" alt="EigGood7" /> <img src="/assets/images/mnist/conv_good7.png" alt="ConvGood7" /></p>
+
+<h3 id="funky-7">Funky 7</h3>
+
+<p>If we take a similar example, except now exaggerate the features of the “7”, we can see how that affects the results of our algorithms. This newly drawn seven is far wider and is pressed further out towards the edges. We can immediately see that the ANN and the KNN wrongly predict the output. The CNN prediction, however, is still correct. On the PCA chart, the new dot is the central gray dot which is clustered near the “6”s.</p>
+
+<p style="text-align:center"><img src="/assets/images/mnist/app_bad7.png" alt="AppBad7" /></p>
+
+<p>Let’s see what the eigenfaces and the convolutional layers look like.</p>
+
+<p style="text-align:center"><img src="/assets/images/mnist/eigenvalues_bad7.png" alt="EigBad7" /> <img src="/assets/images/mnist/conv_bad7.png" alt="ConvBad7" /></p>
+
+<p>We can see from the eigenfaces window that this new “7” has portions well within the positive components (red). This is what caused the number to have a PCA representation much further center than the original “7”. However, if we look at the convolutional layers, especially the second convolution layers, we can see the two major “components” of the 7, the horizontal and the diagonal portions clearly outlined. This indicates that our convolutional layers are able to pick out those features.</p>
+
+<p>Overall, I believed this deeper delve into MNIST helped me understand the algorithms better, as I could see the detailed effects and behaviors on how they handle these unique inputs. I hope by tinkering around and playing with the details, others can gain additional insights from one of the most well known datasets in the field today.</p>
+
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Yingfu Ma. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
